@@ -8,7 +8,7 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     password = input('Пароль: ') #Значение из защищённого поля
 
     try:
-        cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+        cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))s
     except sqlite3.IntegrityError:
         print("Данное имя пользователя уже используется!")
 
@@ -19,9 +19,9 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     con.close()
 
 #sing_up()
+#hrhrhhh
 
-
-currentSesion = False
+currentSession = False
 currentSession_name = ""
 
 def login(): #Функция кнопки Войти
@@ -45,6 +45,5 @@ def login(): #Функция кнопки Войти
     except TypeError:
         print("Вы ввели несущствующее имя пользователя")
         con.close()
-
 login()
 
