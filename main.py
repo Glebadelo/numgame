@@ -1,4 +1,5 @@
 import sqlite3
+import random as rnd
 
 def sing_up(): #Функция кнопка Зарегистрироваться
     con = sqlite3.connect('users_db.db')
@@ -8,7 +9,7 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     password = input('Пароль: ') #Значение из защищённого поля
 
     try:
-        cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))s
+        cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
     except sqlite3.IntegrityError:
         print("Данное имя пользователя уже используется!")
 
@@ -19,8 +20,6 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     con.close()
 
 #sing_up()
-#hrhrhhh00000
-#hehehehehhre
 currentSession = False
 currentSession_name = ""
 
@@ -46,4 +45,35 @@ def login(): #Функция кнопки Войти
         print("Вы ввели несущствующее имя пользователя")
         con.close()
 login()
+
+def startGame():
+    lowBorder = int(input("Нижняя граница:")) #нижняя граница
+    topBorder = int(input("Верхняя граница")) #вернхяя граница
+    n_attemps = 5
+    Num = rnd.randint(lowBorder, topBorder)
+
+    print(Num)
+
+    attemp = 1
+    while (attemp <= n_attemps):
+        N = int(input("Угадайте число: "))
+        if N < Num:
+            print("Заданное число меньше")
+            attemp += 1
+            ##тепло или холодно число окрашивается в соот цвет и заносится в историю
+        elif N > Num:
+            print("Заданное число больше")
+            attemp += 1
+            ##тепло или холодно число окрашивается в соот цвет и заносится в историю
+        else:
+            print("Вы угадали. Игра закончена")
+            break
+            #функция расчёта очков
+
+    else:
+        print("Попытки закончились. Игра закончена")
+        #функция расчёта очков и обновление записи игрока
+
+startGame()
+
 
