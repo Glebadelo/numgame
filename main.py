@@ -19,7 +19,7 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     con.close()
 
 #sing_up()
-#hrhrhhh
+#hrhrhhh00000
 #hehehehehhre
 currentSession = False
 currentSession_name = ""
