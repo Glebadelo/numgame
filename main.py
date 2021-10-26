@@ -10,16 +10,19 @@ def sing_up(): #Функция кнопка Зарегистрироваться
 
     try:
         cur.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+        cur.execute("INSERT INTO liderboard VALUES (?, ?, ?)", (username, 0, 0))
     except sqlite3.IntegrityError:
         print("Данное имя пользователя уже используется!")
 
     for row in cur.execute('SELECT * FROM users ORDER BY username'):
         print(row)
+    for row in cur.execute('SELECT * FROM liderboard ORDER BY username'):
+        print(row)
 
     con.commit()
     con.close()
 
-#sing_up()
+sing_up()
 currentSession = False
 currentSession_name = ""
 
@@ -74,6 +77,6 @@ def startGame():
         print("Попытки закончились. Игра закончена")
         #функция расчёта очков и обновление записи игрока
 
-startGame()
+#startGame()
 
 
