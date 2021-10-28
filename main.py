@@ -22,9 +22,7 @@ def sing_up(): #Функция кнопка Зарегистрироваться
     con.commit()
     con.close()
 
-sing_up()
-currentSession = False
-currentSession_name = ""
+#sing_up()
 
 def login(): #Функция кнопки Войти
     username = input('Имя пользователя: ') #Значение из поля
@@ -37,7 +35,7 @@ def login(): #Функция кнопки Войти
         cur.execute("SELECT password FROM users WHERE username = '%s'" % username)
         result = cur.fetchone()[0]
         if password == result:
-            currentSesion = True
+            global currentSession_name
             currentSession_name = username
             print("Вы успешно зашли")
             # Переход в основное меню игры
@@ -49,9 +47,25 @@ def login(): #Функция кнопки Войти
         con.close()
 login()
 
+def scores(top, low, attemp):
+    con = sqlite3.connect('users_db.db')
+    cur = con.cursor()
+
+    radius = (top - low) + 1
+    score = 100 * (radius/attemp)
+    print(score)
+
+    cur.execute("UPDATE liderboard SET Score=Score + ?, games=games + 1 WHERE username = ?",
+                (score, currentSession_name))
+    con.commit()
+    con.close()
+
+    return score
+
 def startGame():
-    lowBorder = int(input("Нижняя граница:")) #нижняя граница
-    topBorder = int(input("Верхняя граница")) #вернхяя граница
+    print(currentSession_name)
+    lowBorder = int(input("Нижняя граница: ")) #нижняя граница
+    topBorder = int(input("Верхняя граница: ")) #вернхяя граница
     n_attemps = 5
     Num = rnd.randint(lowBorder, topBorder)
 
@@ -70,13 +84,16 @@ def startGame():
             ##тепло или холодно число окрашивается в соот цвет и заносится в историю
         else:
             print("Вы угадали. Игра закончена")
+            scores(topBorder, lowBorder, attemp)
             break
-            #функция расчёта очков
 
     else:
         print("Попытки закончились. Игра закончена")
-        #функция расчёта очков и обновление записи игрока
+        scores(topBorder, lowBorder, attemp)
 
-#startGame()
+startGame()
+
+
+
 
 
